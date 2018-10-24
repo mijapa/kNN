@@ -2,10 +2,8 @@ import numpy
 import pandas
 import scipy
 
-
-class KNN:
+class kNN:
     def predict(self):
         pass
-
     def score(self):
         pass
