@@ -3,7 +3,7 @@ import pandas
 import scipy
 
 
-class kNN:
+class KNN:
     def predict(self):
         pass
 
