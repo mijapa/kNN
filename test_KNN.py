@@ -1,6 +1,5 @@
 from unittest import TestCase
 
-
 class TestKNN(TestCase):
     def test_predict(self):
         self.fail()
