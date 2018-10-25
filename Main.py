@@ -16,28 +16,33 @@ def distEucli(a, b):
 
 class kNN:
     def __init__(self, parametr_k, dane_etykiety_learning):
-        pass
+        self.dane_etykiety_learning = dane_etykiety_learning
+        self.dane_learning = dane_etykiety_learning[:, :-1]
+        self.etykiety_learning = dane_etykiety_learning[:, -1:]
+        self.parametr_k = parametr_k
 
-    def predict(self, dane_test, distEucli):  # zwraca etykiety
-        # print(dane_test)
-        print(distEucli(1, 2))
-        pass
+    def predict(self, dane_test, fcjaDist):  # zwraca etykiety
+        for x in dane_test:
+            for y in self.etykiety_learning:
+                pass
+
+
 
     def score(self, dane_test, etykiety_test):  #zwraca współczynnik poprawnych rozpoznań
         pass
 
+    def wybierzKnajblizszych(self, dane_test, fcjaDist):
+        dana_test = dane_test[0]
+        for x in self.dane_learning:
+            print(fcjaDist(dana_test, x))
 
-dane_etykiety = importer('iris.data.learning')
-dane_etykiety_x = dane_etykiety[0, :-1]
 
-print(dane_etykiety_x)
-dane = dane_etykiety[:, :-1]
-print(dane)
-etykiety = dane_etykiety[:, -1:]
-print(etykiety)
+dane_etykiety_learning = importer('iris.data.learning')
+dane_etykiety_test = importer('iris.data.test')
 
-dist = distEucli(dane_etykiety[0, :-1], dane_etykiety[1, :-1])
-print(dist)
+dane_test = dane_etykiety_test[:, :-1]
+etykiety_test = dane_etykiety_test[:, -1:]
 
-nowa = kNN(2, dane_etykiety)
-nowa.predict(dane_etykiety[:-1], distEucli)
+nowa = kNN(2, dane_etykiety_learning)
+nowa.predict(dane_test, distEucli)
+nowa.wybierzKnajblizszych(dane_test, distEucli)
