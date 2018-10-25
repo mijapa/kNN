@@ -1,9 +1,36 @@
-import numpy
-import pandas
-import scipy
+import numpy as np
+import pandas as pd
+import scipy as sp
+import scipy.spatial as st
+
+
+def importer(file):
+    my_data = pd.read_csv(file)  # panda is faster than numpy
+    array = np.array(my_data)
+    return array
+
+
+def distEucli(a, b):
+    dist = sp.spatial.distance.euclidean(a, b)
+    return dist
 
 class kNN:
-    def predict(self):
+    def __init__(self, parametr_k, dane_etykiety):
         pass
-    def score(self):
+
+    def predict(self, dane):  # zwraca etykiety
         pass
+
+    def score(self, dane, etykiety):  #zwraca współczynnik poprawnych rozpoznań
+        pass
+
+
+dane_etykiety = importer('iris.data.learning')
+dane_etykiety_x = dane_etykiety[0, :-1]
+print(dane_etykiety_x)
+
+dist = distEucli(dane_etykiety[0, :-1], dane_etykiety[1, :-1])
+print(dist)
+
+
+
