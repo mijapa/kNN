@@ -15,22 +15,29 @@ def distEucli(a, b):
     return dist
 
 class kNN:
-    def __init__(self, parametr_k, dane_etykiety):
+    def __init__(self, parametr_k, dane_etykiety_learning):
         pass
 
-    def predict(self, dane):  # zwraca etykiety
+    def predict(self, dane_test, distEucli):  # zwraca etykiety
+        # print(dane_test)
+        print(distEucli(1, 2))
         pass
 
-    def score(self, dane, etykiety):  #zwraca współczynnik poprawnych rozpoznań
+    def score(self, dane_test, etykiety_test):  #zwraca współczynnik poprawnych rozpoznań
         pass
 
 
 dane_etykiety = importer('iris.data.learning')
 dane_etykiety_x = dane_etykiety[0, :-1]
+
 print(dane_etykiety_x)
+dane = dane_etykiety[:, :-1]
+print(dane)
+etykiety = dane_etykiety[:, -1:]
+print(etykiety)
 
 dist = distEucli(dane_etykiety[0, :-1], dane_etykiety[1, :-1])
 print(dist)
 
-
-
+nowa = kNN(2, dane_etykiety)
+nowa.predict(dane_etykiety[:-1], distEucli)
