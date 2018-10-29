@@ -14,6 +14,11 @@ def distEucli(a, b):
     dist = sp.spatial.distance.euclidean(a, b)
     return dist
 
+
+def distManhattan(a, b):
+    dist = sp.spatial.distance.yule(a, b)
+    return dist
+
 class kNN:
     def __init__(self, parametr_k, dane_etykiety_learning):
         self.dane_etykiety_learning = dane_etykiety_learning
