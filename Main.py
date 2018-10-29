@@ -21,21 +21,43 @@ class kNN:
         self.etykiety_learning = dane_etykiety_learning[:, -1:]
         self.parametr_k = parametr_k
 
-    def predict(self, dane_test, fcjaDist):  # zwraca etykiety
-        for x in dane_test:
-            for y in self.etykiety_learning:
-                pass
-
-
-
-    def score(self, dane_test, etykiety_test):  #zwraca współczynnik poprawnych rozpoznań
-        pass
-
-    def wybierzKnajblizszych(self, dane_test, fcjaDist):
-        dana_test = dane_test[0]
+    def policzDystIsortuj(self, a, fcjaDist):
+        y = []
         for x in self.dane_learning:
-            print(fcjaDist(dana_test, x))
+            y += [[fcjaDist(a, x)]]
+        # print(y)
+        y = np.append(self.dane_etykiety_learning, y, axis=1)
+        z = y[y[:, -1].argsort()]
+        return z
 
+    def wybierzMaxZKdanych(self, dane_ety_learn_dyst):
+        k_wybranych = dane_ety_learn_dyst[:self.parametr_k, -2:-1]
+        unq, cnt = np.unique(k_wybranych, return_counts=True)
+        return (k_wybranych[np.argmax(cnt)])
+
+    def etykietaDlaJednej(self, dana_test, fcjaDist):
+        dane_ety_learn_dyst = self.policzDystIsortuj(dana_test, fcjaDist)  # na razie dla jednej danej testowej
+        return self.wybierzMaxZKdanych(dane_ety_learn_dyst)
+
+
+
+    def predict(self, dane_test, fcjaDist):  # zwraca etykiety
+        """:rtype: list"""
+        y = 1
+        for x in dane_test:
+            y = np.vstack([y, [self.etykietaDlaJednej(x, fcjaDist)]])
+        y = y[1:]
+        return y
+
+    def score(self, dane_test, etykiety_test, fcjaDist):  # zwraca współczynnik poprawnych rozpoznań
+        przydzielone_etykiety = self.predict(dane_test, fcjaDist)
+        a = 0
+        b = 0
+        for x in przydzielone_etykiety:
+            if (x == etykiety_test[a]):
+                b += 1
+            a += 1
+        return b / (a)  # jakiej wielkosci powinno być a?
 
 dane_etykiety_learning = importer('iris.data.learning')
 dane_etykiety_test = importer('iris.data.test')
@@ -43,6 +65,7 @@ dane_etykiety_test = importer('iris.data.test')
 dane_test = dane_etykiety_test[:, :-1]
 etykiety_test = dane_etykiety_test[:, -1:]
 
-nowa = kNN(2, dane_etykiety_learning)
-nowa.predict(dane_test, distEucli)
-nowa.wybierzKnajblizszych(dane_test, distEucli)
+nowa = kNN(1, dane_etykiety_learning)
+# print(nowa.predict(dane_test, distEucli))
+print("Procent poprawnych rozpoznań: ")
+print(nowa.score(dane_test, etykiety_test, distEucli))
