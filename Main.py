@@ -40,22 +40,20 @@ class kNN:
         unq, cnt = np.unique(k_wybranych, return_counts=True)
         return (k_wybranych[np.argmax(cnt)])
 
-    def etykietaDlaJednej(self, dana_test, fcjaDist):
-        dane_ety_learn_dyst = self.policzDystIsortuj(dana_test, fcjaDist)  # na razie dla jednej danej testowej
+    def etykietaDlaJednej(self, dana_test):
+        dane_ety_learn_dyst = self.policzDystIsortuj(dana_test, distEucli)  ##funkcja jako parametr
         return self.wybierzMaxZKdanych(dane_ety_learn_dyst)
 
-
-
-    def predict(self, dane_test, fcjaDist):  # zwraca etykiety
+    def predict(self, dane_test):  # zwraca etykiety
         """:rtype: list"""
         y = 1
         for x in dane_test:
-            y = np.vstack([y, [self.etykietaDlaJednej(x, fcjaDist)]])
+            y = np.vstack([y, [self.etykietaDlaJednej(x)]])
         y = y[1:]
         return y
 
     def score(self, dane_test, etykiety_test, fcjaDist):  # zwraca współczynnik poprawnych rozpoznań
-        przydzielone_etykiety = self.predict(dane_test, fcjaDist)
+        przydzielone_etykiety = self.predict(dane_test)
         a = 0
         b = 0
         for x in przydzielone_etykiety:
